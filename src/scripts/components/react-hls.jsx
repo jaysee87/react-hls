@@ -39,7 +39,11 @@ class ReactHls extends React.Component {
         hls.loadSource(url);
         hls.attachMedia($video);
         hls.on(Hls.Events.FRAG_CHANGED, (event, data) => {
-            if (this.props.getTime){this.props.getTime(data.frag.rawProgramDateTime);}
+            console.log(data.frag);
+            if (this.props.getTime){this.props.getTime({
+                rawProgramDateTime: data.frag.rawProgramDateTime,
+                start: data.frag.start
+            });}
         })
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             if (autoplay) {
