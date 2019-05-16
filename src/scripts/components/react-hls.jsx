@@ -34,13 +34,12 @@ class ReactHls extends React.Component {
         }
 
         let { url, autoplay, hlsConfig } = this.props;
-        // let { video : $video } = this.refs;
         let hls = new Hls(hlsConfig);
 
         hls.loadSource(url);
         hls.attachMedia($video);
-        hls.on(Hls.Events.MANIFEST_LOADED, (data) => {
-            console.log(data);
+        hls.on(Hls.Events.FRAG_CHANGED, (event, data) => {
+            if (this.props.getTime){this.props.getTime(data.frag.rawProgramDateTime);}
         })
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             if (autoplay) {
@@ -73,6 +72,7 @@ class ReactHls extends React.Component {
 ReactHls.propTypes = {
     url : PropTypes.string.isRequired,
     playerId: PropTypes.string.isRequired,
+    getTime: PropTypes.func,
     autoplay : PropTypes.bool,
     hlsConfig : PropTypes.object, //https://github.com/dailymotion/hls.js/blob/master/API.md#fine-tuning
     controls : PropTypes.bool,
