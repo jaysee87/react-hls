@@ -28,6 +28,7 @@ import ReactHLS from 'react-hls';
     the hls url that you want to play
 
 - playerId `String` `required`
+
     the id to give to the video element
 
 - autoplay `Boolean`
@@ -47,6 +48,7 @@ import ReactHLS from 'react-hls';
     video height
 
 - getTime `Function`
+
     gets `rawProgramDateTime` for each new hlsjs fragment
 
 - hlsConfig `Object`
