@@ -38,8 +38,8 @@ class ReactHls extends React.Component {
 
         hls.loadSource(url);
         hls.attachMedia($video);
-        $video.addEventListener('timeupdate', ()=>{
-            console.log(this.hls.liveSyncPosition);
+        hls.on(Hls.Events.MANIFEST_LOADED, (data) => {
+            console.log(data);
         })
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             if (autoplay) {
