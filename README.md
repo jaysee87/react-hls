@@ -47,7 +47,7 @@ import ReactHLS from 'react-hls';
 
     video height
 
-- getTime `Function`
+- getTime(dateTime) `Function`
 
     gets `rawProgramDateTime` for each new hlsjs fragment
 
