@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Hls from 'hls.js';
+let $video;
 
 class ReactHls extends React.Component {
     constructor (props) {
@@ -33,7 +34,7 @@ class ReactHls extends React.Component {
         }
 
         let { url, autoplay, hlsConfig } = this.props;
-        let { video : $video } = this.refs;
+        // let { video : $video } = this.refs;
         let hls = new Hls(hlsConfig);
 
         hls.loadSource(url);
@@ -56,7 +57,7 @@ class ReactHls extends React.Component {
 
         return (
             <div key={`react-hls-${playerId}`} className="player-area">
-                <video ref="video"
+                <video ref={video => {$video = video;}}
                        className="hls-player"
                        id={playerId}
                        controls={controls}
