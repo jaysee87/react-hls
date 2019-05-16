@@ -8,10 +8,6 @@ class ReactHls extends React.Component {
     constructor (props) {
         super(props);
 
-        this.state = {
-            playerId : Date.now()
-        };
-
         this.hls = null;
     }
 
@@ -52,14 +48,14 @@ class ReactHls extends React.Component {
     }
 
     render () {
-        let { playerId } = this.state;
+        let { playerId } = this.props;
         const { controls, width, height, poster, videoProps } = this.props;
 
         return (
-            <div key={playerId} className="player-area">
+            <div key={`react-hls-${playerId}`} className="player-area">
                 <video ref="video"
                        className="hls-player"
-                       id={`react-hls-${playerId}`}
+                       id={playerId}
                        controls={controls}
                        width={width}
                        height={height}
@@ -72,6 +68,7 @@ class ReactHls extends React.Component {
 
 ReactHls.propTypes = {
     url : PropTypes.string.isRequired,
+    playerId: PropTypes.string.isRequired,
     autoplay : PropTypes.bool,
     hlsConfig : PropTypes.object, //https://github.com/dailymotion/hls.js/blob/master/API.md#fine-tuning
     controls : PropTypes.bool,
