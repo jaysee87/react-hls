@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Hls from 'hls.js';
 let $video;
+let $frag;
 
 class ReactHls extends React.Component {
     constructor (props) {
@@ -38,13 +39,24 @@ class ReactHls extends React.Component {
 
         hls.loadSource(url);
         hls.attachMedia($video);
-        hls.on(Hls.Events.FRAG_CHANGED, (event, data) => {
-            if (this.props.getTime){this.props.getTime({
-                rawProgramDateTime: data.frag.rawProgramDateTime,
-                start: data.frag.start
-            });}
+    
+        hls.on(Hls.Events.FRAG_LOADING, (e, d)=>{
+            // TODO Figure out why data.levels[0].details is returning undefined
+            // data.levels[0] shows details undefined collapsed, but shows everything when expanded
+            // Can remove this listener once resolved
+            // Only want the very first fragment to determine DateTime local player's currentTime is in relation to
+            if(!$frag) {
+                $frag = d.frag.rawProgramDateTime; // Should be what local player's currentTime is in relation to
+                if(this.props.getTime){
+                    this.props.getTime($frag);
+                }
+            }
         })
+
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            // TODO Figure out why data.levels[0].details is returning undefined
+            // data.levels[0] shows details undefined collapsed, but shows everything when expanded
+            $frag = null;
             if (autoplay) {
                 $video.play();
             }
