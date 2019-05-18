@@ -62,6 +62,11 @@ class ReactHls extends React.Component {
             }
         });
 
+        hls.on(Hls.Events.ERROR, (error, data)=>{
+            console.log(error);
+            console.log(data);
+        })
+
         this.hls = hls;
     }
 
