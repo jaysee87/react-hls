@@ -49,7 +49,7 @@ import ReactHLS from 'react-hls';
 
 - getTime(dateTime) `Function`
 
-    returns `{rawProgramDateTime, start}` for each new hlsjs fragment
+    returns `rawProgramDateTime` for first fragment (player.currentTime should be in relation to this)
 
 - hlsConfig `Object`
 
