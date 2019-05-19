@@ -3,13 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Hls from 'hls.js';
-let $video;
-let $frag;
 
 class ReactHls extends React.Component {
     constructor (props) {
         super(props);
-
+        this.frag = null;
+        this.video = null;
         this.hls = null;
     }
 
@@ -38,18 +37,17 @@ class ReactHls extends React.Component {
         let hls = new Hls(hlsConfig);
 
         hls.loadSource(url);
-        hls.attachMedia($video);
+        hls.attachMedia(this.video);
     
         hls.on(Hls.Events.FRAG_LOADED, (e, d)=>{
             // TODO Figure out why data.levels[0].details is returning undefined
             // data.levels[0] shows details undefined collapsed, but shows everything when expanded
             // Can remove this listener once resolved
             // Only want the very first fragment to determine DateTime local player's currentTime is in relation to
-            console.log($frag);
-            if(!$frag) {
-                $frag = d.frag.rawProgramDateTime; // Should be what local player's currentTime is in relation to
+            if(!this.frag) {
+                this.frag = d.frag.rawProgramDateTime; // Should be what local player's currentTime is in relation to
                 if(this.props.getTime){
-                    this.props.getTime($frag);
+                    this.props.getTime(this.frag);
                 }
             }
         })
@@ -57,9 +55,9 @@ class ReactHls extends React.Component {
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             // TODO Figure out why data.levels[0].details is returning undefined
             // data.levels[0] shows details undefined collapsed, but shows everything when expanded
-            $frag = null;
+            this.frag = null;
             if (autoplay) {
-                $video.play();
+                this.video.play();
             }
         });
 
@@ -77,7 +75,7 @@ class ReactHls extends React.Component {
 
         return (
             <div key={`react-hls-${playerId}`} className="player-area">
-                <video ref={video => {$video = video;}}
+                <video ref={video => {this.video = video;}}
                        className="hls-player"
                        id={playerId}
                        controls={controls}
