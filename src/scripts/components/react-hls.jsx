@@ -40,7 +40,7 @@ class ReactHls extends React.Component {
         hls.loadSource(url);
         hls.attachMedia($video);
     
-        hls.on(Hls.Events.FRAG_LOADING, (e, d)=>{
+        hls.on(Hls.Events.FRAG_LOADED, (e, d)=>{
             // TODO Figure out why data.levels[0].details is returning undefined
             // data.levels[0] shows details undefined collapsed, but shows everything when expanded
             // Can remove this listener once resolved
