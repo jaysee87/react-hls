@@ -62,8 +62,11 @@ class ReactHls extends React.Component {
         });
 
         hls.on(Hls.Events.ERROR, (error, data)=>{
-            console.log(error);
-            console.log(data);
+            const errorobject = {}
+            errorobject[error] = data;
+            if (this.props.errorGetter){
+                this.props.errorGetter(errorobject)
+            }
         })
 
         this.hls = hls;
