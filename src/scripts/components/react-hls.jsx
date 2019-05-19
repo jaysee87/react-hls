@@ -45,6 +45,7 @@ class ReactHls extends React.Component {
             // data.levels[0] shows details undefined collapsed, but shows everything when expanded
             // Can remove this listener once resolved
             // Only want the very first fragment to determine DateTime local player's currentTime is in relation to
+            console.log($frag);
             if(!$frag) {
                 $frag = d.frag.rawProgramDateTime; // Should be what local player's currentTime is in relation to
                 if(this.props.getTime){
