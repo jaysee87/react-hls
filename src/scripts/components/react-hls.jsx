@@ -10,14 +10,18 @@ class ReactHls extends React.Component {
         this.frag = null;
         this.video = null;
         this.hls = null;
+        this.m3u8 = null;
     }
 
     componentDidUpdate () {
-        this._initPlayer();
+    // Only want to reload if the url is different;
+        if (this.m3u8 !== this.props.url){
+            this._initPlayer();
+        }
     }
 
     componentDidMount () {
-        this._initPlayer();
+        this._initPlayer();      
     }
 
     componentWillUnmount () {
@@ -35,6 +39,7 @@ class ReactHls extends React.Component {
 
         let { url, autoplay, hlsConfig } = this.props;
         let hls = new Hls(hlsConfig);
+        this.m3u8 = url;  // Used to determine if url has changed for componentDidUpdate()
 
         hls.loadSource(url);
         hls.attachMedia(this.video);

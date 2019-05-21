@@ -2,6 +2,7 @@
 
 `react-hls` is a simple hls/rtmp live stream player.
 It will use [hls.js](https://github.com/dailymotion/hls.js) to play your hls live stream if your browser support `html 5 video` and `MediaSource Extension`. Otherwise it will downgrade to `Flash` play your `rtmp` live stream.
+This fork has some modifications for restreaming gaming matches where you only want hls to reload when you put in a new video, rather than every update to the parent component.
 
 ## Todo
 - [x] Start the project
