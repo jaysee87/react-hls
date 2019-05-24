@@ -16,6 +16,7 @@ class ReactHls extends React.Component {
     componentDidUpdate () {
     // Only want to reload if the url is different;
         if (this.m3u8 !== this.props.url){
+            this.video.muted = true;
             this._initPlayer();
         }
     }
